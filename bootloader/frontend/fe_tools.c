@@ -618,7 +618,7 @@ void minerva()
 	// Set table to ram.
 	mtc_cfg.mtc_table = NULL;
 	mtc_cfg.sdram_id = (fuse_read_odm(4) >> 3) & 0x1F;
-	ianos_loader(false, "bootloader/sys/libsys_minerva.bso", DRAM_LIB, (void *)&mtc_cfg);
+	ianos_loader(false, "bootloader2/sys/libsys_minerva.bso", DRAM_LIB, (void *)&mtc_cfg);
 
 	gfx_printf("\nStarting training process..\n\n");
 
@@ -636,14 +636,14 @@ void minerva()
 	mtc_cfg.rate_to = 800000;
 	mtc_cfg.train_mode = OP_TRAIN_SWITCH;
 	gfx_printf("Training and switching %7d -> %7d\n\n", mtc_cfg.mtc_table[curr_ram_idx].rate_khz, 800000);
-	ianos_loader(false, "bootloader/sys/libsys_minerva.bso", DRAM_LIB, (void *)&mtc_cfg);
+	ianos_loader(false, "bootloader2/sys/libsys_minerva.bso", DRAM_LIB, (void *)&mtc_cfg);
 	
 	// Thefollowing frequency needs periodic training every 100ms.
 	//msleep(200);
 
 	//mtc_cfg.rate_to = 1600000;
 	//gfx_printf("Training and switching  %7d -> %7d\n\n", mtc_cfg.current_emc_table->rate_khz, 1600000);
-	//ianos_loader(false, "bootloader/sys/libsys_minerva.bso", DRAM_LIB, (void *)&mtc_cfg);
+	//ianos_loader(false, "bootloader2/sys/libsys_minerva.bso", DRAM_LIB, (void *)&mtc_cfg);
 
 	//mtc_cfg.train_mode = OP_PERIODIC_TRAIN;
 	

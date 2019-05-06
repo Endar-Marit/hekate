@@ -339,8 +339,8 @@ void auto_launch_update()
 		EMC(EMC_SCRATCH0) &= ~EMC_HEKA_UPD;
 	else if (sd_mount())
 	{
-		if (!f_stat("bootloader/update.bin", NULL))
-			launch_payload("bootloader/update.bin", true);
+		if (!f_stat("bootloader2/update.bin", NULL))
+			launch_payload("bootloader2/update.bin", true);
 	}
 }
 
@@ -361,9 +361,9 @@ void launch_tools(u8 type)
 		dir = (char *)malloc(256);
 
 		if (!type)
-			memcpy(dir, "bootloader/payloads", 20);
+			memcpy(dir, "bootloader2/payloads", 20);
 		else
-			memcpy(dir, "bootloader/modules", 19);
+			memcpy(dir, "bootloader2/modules", 19);
 
 		filelist = dirlist(dir, NULL, false);
 
@@ -461,7 +461,7 @@ void ini_list_launcher()
 
 	if (sd_mount())
 	{
-		if (ini_parse(&ini_list_sections, "bootloader/ini", true))
+		if (ini_parse(&ini_list_sections, "bootloader2/ini", true))
 		{
 			// Build configuration menu.
 			ment_t *ments = (ment_t *)malloc(sizeof(ment_t) * (max_entries + 3));
@@ -534,7 +534,7 @@ void ini_list_launcher()
 			ini_free(&ini_list_sections);
 		}
 		else
-			EPRINTF("Could not find any ini\nin bootloader/ini!");
+			EPRINTF("Could not find any ini\nin bootloader2/ini!");
 	}
 
 	if (!cfg_sec)
@@ -575,7 +575,7 @@ void launch_firmware()
 
 	if (sd_mount())
 	{
-		if (ini_parse(&ini_sections, "bootloader/hekate_ipl.ini", false))
+		if (ini_parse(&ini_sections, "bootloader2/hekate_ipl.ini", false))
 		{
 			// Build configuration menu.
 			ment_t *ments = (ment_t *)malloc(sizeof(ment_t) * (max_entries + 6));
@@ -658,7 +658,7 @@ void launch_firmware()
 			ini_free(&ini_sections);
 		}
 		else
-			EPRINTF("Could not open 'bootloader/hekate_ipl.ini'.\nMake sure it exists!");
+			EPRINTF("Could not open 'bootloader2/hekate_ipl.ini'.\nMake sure it exists!");
 	}
 
 	if (!cfg_sec)
@@ -722,10 +722,10 @@ void auto_launch_firmware()
 
 	if (sd_mount())
 	{
-		if (f_stat("bootloader/hekate_ipl.ini", NULL))
+		if (f_stat("bootloader2/hekate_ipl.ini", NULL))
 			create_config_entry();
 
-		if (ini_parse(&ini_sections, "bootloader/hekate_ipl.ini", false))
+		if (ini_parse(&ini_sections, "bootloader2/hekate_ipl.ini", false))
 		{
 			u32 configEntry = 0;
 			u32 boot_entry_id = 0;
@@ -796,7 +796,7 @@ void auto_launch_firmware()
 				boot_entry_id = 1;
 				bootlogoCustomEntry = NULL;
 
-				if (ini_parse(&ini_list_sections, "bootloader/ini", true))
+				if (ini_parse(&ini_list_sections, "bootloader2/ini", true))
 				{
 					LIST_FOREACH_ENTRY(ini_sec_t, ini_sec_list, &ini_list_sections, link)
 					{
@@ -847,7 +847,7 @@ void auto_launch_firmware()
 			bitmap = (u8 *)sd_file_read(bootlogoCustomEntry, NULL);
 
 		if (!bitmap) // Custom entry bootlogo not found, trying default custom one.
-			bitmap = (u8 *)sd_file_read("bootloader/bootlogo.bmp", NULL);
+			bitmap = (u8 *)sd_file_read("bootloader2/bootlogo.bmp", NULL);
 
 		if (bitmap)
 		{
@@ -1186,7 +1186,7 @@ void ipl_main()
 	set_default_configuration();
 
 	// Save sdram lp0 config.
-	if (ianos_loader(true, "bootloader/sys/libsys_lp0.bso", DRAM_LIB, (void *)sdram_get_params_patched()))
+	if (ianos_loader(true, "bootloader2/sys/libsys_lp0.bso", DRAM_LIB, (void *)sdram_get_params_patched()))
 		h_cfg.errors |= ERR_LIBSYS_LP0;
 
 	display_init();
