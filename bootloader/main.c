@@ -148,6 +148,18 @@ int sd_save_to_file(void *buf, u32 size, const char *filename)
 	return 0;
 }
 
+void copyfile(const char *source, const char *target)
+{
+	FIL fp;
+	if (f_open(&fp, source, FA_READ) != FR_OK)
+		return NULL;
+
+	u32 size = f_size(&fp);
+	f_close(&fp);
+
+	sd_save_to_file(sd_file_read(source, NULL), size, target);
+}
+
 void emmcsn_path_impl(char *path, char *sub_dir, char *filename, sdmmc_storage_t *storage)
 {
 	sdmmc_storage_t storage2;
@@ -277,6 +289,15 @@ int launch_payload(char *path, bool update)
 			return 1;
 		}
 
+		// copy payload to sept
+		if (!update)
+		{
+			if (strstr(strlwr(path), "reinx") != NULL)
+				copyfile("bootloader2/payloads/reinxchainloader.bin", "sept/payload.bin");
+			else
+				copyfile(path, "sept/payload.bin");
+		}
+		
 		// Read and copy the payload to our chosen address
 		void *buf;
 		u32 size = f_size(&fp);
