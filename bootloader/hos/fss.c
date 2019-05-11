@@ -88,6 +88,7 @@ int parse_fss(launch_ctxt_t *ctxt, const char *value)
 	if (fss_meta->magic == FSS0_MAGIC)
 	{
 
+		f_unlink("sept/payload.bin");
 		copyfile(value, "sept/payload.bin");
 
 		gfx_printf("Found FSS0, Atmosphere %d.%d.%d-%08x\n"

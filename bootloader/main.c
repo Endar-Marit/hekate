@@ -292,8 +292,9 @@ int launch_payload(char *path, bool update)
 		// copy payload to sept
 		if (!update)
 		{
+			f_unlink("sept/payload.bin");
 			if (strstr(strlwr(path), "reinx") != NULL)
-				copyfile("bootloader2/payloads/reinxchainloader.bin", "sept/payload.bin");
+				copyfile("ReiNX/septchainloader.bin", "sept/payload.bin");
 			else
 				copyfile(path, "sept/payload.bin");
 		}
