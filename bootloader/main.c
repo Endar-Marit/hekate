@@ -294,7 +294,7 @@ int launch_payload(char *path, bool update)
 		{
 			if (strstr(strlwr(path), "reinx") != NULL)
 				copyfile("ReiNX/septchainloader.bin", "sept/payload.bin");
-			else if (strstr(strlwr(path), "atmosphere") != NULL)
+			else if (strstr(strlwr(path), "fusee") != NULL)
 				copyfile(path, "sept/payload.bin");
 		}
 		
