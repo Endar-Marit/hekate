@@ -292,10 +292,9 @@ int launch_payload(char *path, bool update)
 		// copy payload to sept
 		if (!update)
 		{
-			f_unlink("sept/payload.bin");
 			if (strstr(strlwr(path), "reinx") != NULL)
 				copyfile("ReiNX/septchainloader.bin", "sept/payload.bin");
-			else
+			else if (strstr(strlwr(path), "atmosphere") != NULL)
 				copyfile(path, "sept/payload.bin");
 		}
 		
