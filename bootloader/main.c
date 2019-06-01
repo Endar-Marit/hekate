@@ -273,12 +273,12 @@ bool is_ipl_updated(void *buf)
 void save_to_sept(char *payload)
 {
 	FIL fp;
+	f_unlink("sept/reinx");
+	f_unlink("sept/atmosphere");
 	if (strstr(strlwr(payload), "reinx") != NULL) {
-		f_unlink("sept/atmosphere");
 		f_open(&fp, "sept/reinx", FA_CREATE_ALWAYS);
 		copyfile("ReiNX/septchainloader.bin", "sept/payload.bin");
 	} else if (strstr(strlwr(payload), "fusee") != NULL) {
-		f_unlink("sept/reinx");
 		f_open(&fp, "sept/atmosphere", FA_CREATE_ALWAYS);
 		copyfile(payload, "sept/payload.bin");
 	}
