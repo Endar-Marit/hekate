@@ -270,6 +270,21 @@ bool is_ipl_updated(void *buf)
 		return true;
 }
 
+void save_to_sept(char *payload)
+{
+	FIL fp;
+	if (strstr(strlwr(payload), "reinx") != NULL) {
+		f_unlink("sept/atmosphere");
+		f_open(&fp, "sept/reinx", FA_CREATE_ALWAYS);
+		copyfile("ReiNX/septchainloader.bin", "sept/payload.bin");
+	} else if (strstr(strlwr(payload), "fusee") != NULL) {
+		f_unlink("sept/reinx");
+		f_open(&fp, "sept/atmosphere", FA_CREATE_ALWAYS);
+		copyfile(payload, "sept/payload.bin");
+	}
+	f_close(&fp);
+}
+
 int launch_payload(char *path, bool update)
 {
 	if (!update)
@@ -289,14 +304,8 @@ int launch_payload(char *path, bool update)
 			return 1;
 		}
 
-		// copy payload to sept
 		if (!update)
-		{
-			if (strstr(strlwr(path), "reinx") != NULL)
-				copyfile("ReiNX/septchainloader.bin", "sept/payload.bin");
-			else if (strstr(strlwr(path), "fusee") != NULL)
-				copyfile(path, "sept/payload.bin");
-		}
+			save_to_sept(path);
 		
 		// Read and copy the payload to our chosen address
 		void *buf;
