@@ -724,6 +724,48 @@ static kip1_patchset_t _fs_patches_800_exfat[] =
 	{ NULL, NULL }
 };
 
+static kip1_patch_t _fs_nosigchk_800[] =
+{
+	{ KPS(KIP_TEXT) | 0x7630C, 4, "\x51\x44\x00\x94", "\xE0\x03\x1F\x2A" },
+	{ KPS(KIP_TEXT) | 0xF49A4, 4, "\xC0\x03\x00\x36", "\x1F\x20\x03\xD5" },
+	{ 0, 0, NULL, NULL }
+};
+
+static kip1_patch_t _fs_nosigchk_800_exfat[] =
+{
+	{ KPS(KIP_TEXT) | 0x818BC, 4, "\x51\x44\x00\x94", "\xE0\x03\x1F\x2A" },
+	{ KPS(KIP_TEXT) | 0xFFF54, 4, "\xC0\x03\x00\x36", "\x1F\x20\x03\xD5" },
+	{ 0, 0, NULL, NULL }
+};
+
+static kip1_patch_t _fs_nogc_800[] =
+{
+	{ KPS(KIP_TEXT) | 0x136800, 8, "\xF4\x4F\xBE\xA9\xFD\x7B\x01\xA9", "\xE0\x03\x1F\x2A\xC0\x03\x5F\xD6" },
+	{ KPS(KIP_TEXT) | 0x15EB94, 4, "\x14\x40\x80\x52", "\x14\x80\x80\x52" },
+	{ 0, 0, NULL, NULL }
+};
+
+static kip1_patch_t _fs_nogc_800_exfat[] =
+{
+	{ KPS(KIP_TEXT) | 0x141DB0, 8, "\xF4\x4F\xBE\xA9\xFD\x7B\x01\xA9", "\xE0\x03\x1F\x2A\xC0\x03\x5F\xD6" },
+	{ KPS(KIP_TEXT) | 0x16A144, 4, "\x14\x40\x80\x52", "\x14\x80\x80\x52" },
+	{ 0, 0, NULL, NULL }
+};
+
+static kip1_patchset_t _fs_patches_800[] =
+{
+	{ "nosigchk", _fs_nosigchk_800 },
+	{ "nogc",     _fs_nogc_800 },
+	{ NULL, NULL }
+};
+
+static kip1_patchset_t _fs_patches_800_exfat[] =
+{
+	{ "nosigchk", _fs_nosigchk_800_exfat },
+	{ "nogc",     _fs_nogc_800_exfat },
+	{ NULL, NULL }
+};
+
 // SHA256 hashes.
 static kip1_id_t _kip_ids[] = 
 {
