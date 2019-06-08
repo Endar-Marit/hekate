@@ -272,17 +272,11 @@ bool is_ipl_updated(void *buf)
 
 void save_to_sept(char *payload)
 {
-	FIL fp;
-	f_unlink("sept/reinx");
-	f_unlink("sept/atmosphere");
 	if (strstr(strlwr(payload), "reinx") != NULL) {
-		f_open(&fp, "sept/reinx", FA_CREATE_ALWAYS);
 		copyfile("ReiNX/septchainloader.bin", "sept/payload.bin");
 	} else if (strstr(strlwr(payload), "fusee") != NULL) {
-		f_open(&fp, "sept/atmosphere", FA_CREATE_ALWAYS);
 		copyfile(payload, "sept/payload.bin");
 	}
-	f_close(&fp);
 }
 
 int launch_payload(char *path, bool update)
@@ -1042,32 +1036,12 @@ void about()
 		"   Copyright (c) 2014, Owen Shepherd\n"
 		"   Copyright (c) 2018, M4xw\n"
 		" ___________________________________________\n\n";
-	static const char octopus[] =
-		"                         %k___\n"
-		"                      .-'   `'.\n"
-		"                     /         \\\n"
-		"                     |         ;\n"
-		"                     |         |           ___.--,\n"
-		"            _.._     |0) = (0) |    _.---'`__.-( (_.\n"
-		"     __.--'`_.. '.__.\\    '--. \\_.-' ,.--'`     `\"\"`\n"
-		"    ( ,.--'`   ',__ /./;   ;, '.__.'`    __\n"
-		"    _`) )  .---.__.' / |   |\\   \\__..--\"\"  \"\"\"--.,_\n"
-		"   `---' .'.''-._.-'`_./  /\\ '.  \\ _.--''````'''--._`-.__.'\n"
-		"         | |  .' _.-' |  |  \\  \\  '.               `----`\n"
-		"          \\ \\/ .'     \\  \\   '. '-._)\n"
-		"           \\/ /        \\  \\    `=.__`'-.\n"
-		"           / /\\         `) )    / / `\"\".`\\\n"
-		"     , _.-'.'\\ \\        / /    ( (     / /\n"
-		"      `--'`   ) )    .-'.'      '.'.  | (\n"
-		"             (/`    ( (`          ) )  '-;   %k[switchbrew]%k\n"
-		"              `      '-;         (-'%k";
 
 	gfx_clear_grey(0x1B);
 	gfx_con_setpos(0, 0);
 
 	gfx_printf(credits, 0xFF00CCFF, 0xFFCCCCCC);
 	gfx_con.fntsz = 8;
-	gfx_printf(octopus, 0xFF00CCFF, 0xFF00FFCC, 0xFF00CCFF, 0xFFCCCCCC);
 
 	btn_wait();
 }
