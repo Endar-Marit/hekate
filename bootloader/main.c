@@ -273,9 +273,9 @@ bool is_ipl_updated(void *buf)
 void save_to_sept(char *payload)
 {
 	if (strstr(strlwr(payload), "reinx") != NULL) {
-		copyfile("ReiNX/septchainloader.bin", "sept/payload.bin");
+		copyfile("sept/ReiNX/payload.bin", "sept/payload.bin");
 	} else if (strstr(strlwr(payload), "fusee") != NULL) {
-		copyfile(payload, "sept/payload.bin");
+		copyfile("sept/atmo/payload.bin", "sept/payload.bin");
 	}
 }
 
